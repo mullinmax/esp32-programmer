@@ -5,16 +5,12 @@ def wget(url):
     response.json()
 
 
-
-
-
-
 def main():
 
-    wget('')
+    text = wget('https://raw.githubusercontent.com/mullinmax/esp32-programmer/master/main.py')
 
-    with open(main.py,'w') as f:
-        
+    with open(output.txt,'w') as f:
+        f.write(text)
 
 
 if __name__ == '__main__':
