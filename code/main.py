@@ -1,5 +1,3 @@
-import neopixel
-import sys
 import time
 import math
 
@@ -9,14 +7,9 @@ from frame_buffer import frame_buffer
 def cycle_through(values, seconds, t):
     return values[int(t/seconds)%len(values)]
 
-def random(vector, time_ms):   
-    rand = int((vector.x*time_ms)%255)
-    return (rand, rand, rand)
-
 def locator(vector, time_ms):   
-    # black(pixels)
-    num_bits = math.ceil(math.log2(config.num_leds))
-    cycle = cycle_through(range(num_bits), 0.25, time_ms/1000.0)
+    num_bits = 7#math.ceil(math.log2(config.num_leds))
+    cycle = cycle_through(range(num_bits), 0.5, time_ms/1000.0)
     if bool((vector.x >> cycle) & 1):
         return (100,30,50)
     else:
@@ -27,5 +20,5 @@ def main():
     while True:
         fb.render_a_frame()
         fb.display_a_frame()
-        print(len(fb.buffer), fb.ms_per_frame)
+        print(len(fb.buffer), fb.ms_per_frame, fb.buffer[0].target_time - time.ticks_ms())
     

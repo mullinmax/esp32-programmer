@@ -7,10 +7,10 @@ wifi = {
     'password':'allhailhypnotoad'
 }
 
-fps = 30
+fps = 10
 frame_buffer_size = 10
 led_scale = 255
-num_leds = 50
+num_leds = 100
 led_pin = Pin(2)
 led_vectors = [vector(i,i,i) for i in range(num_leds)]
 
