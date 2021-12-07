@@ -2,23 +2,33 @@ import time
 import math
 
 import config
-from frame_buffer import frame_buffer
+from animation import animation
 
-def cycle_through(values, seconds, t):
-    return values[int(t/seconds)%len(values)]
-
-def locator(vector, time_ms):   
-    num_bits = 7#math.ceil(math.log2(config.num_leds))
-    cycle = cycle_through(range(num_bits), 0.5, time_ms/1000.0)
-    if bool((vector.x >> cycle) & 1):
-        return (100,30,50)
+def locator(**kwargs):
+    if kwargs['frame_num'] < 0:
+        return (0, 0, 255)
+    # sel = 1 << kwargs['frame_num']
+    # if kwargs['vector'].x & sel:
+    #     return (100,30,50)
+    # else:
+    #     return (0,0,0)   
+    prev =locator(vector=kwargs['vector'], frame_num = kwargs['frame_num']-1)
+    sel = 1 << kwargs['frame_num']
+    if kwargs['vector'].x & sel:
+        return (prev[2], prev[0], prev[1])
     else:
-        return (0,0,0)   
+        return (prev[1], prev[2], prev[0])
 
 def main():
-    fb = frame_buffer(config.led_pin, config.led_vectors, config.frame_buffer_size, locator, config.fps)
+    num_frames = math.ceil(math.log2(config.num_leds))
+    a = animation(config.fps, num_frames, locator, config.led_vectors, config.led_pin)
+    last_time = 0
+    counter = 0
     while True:
-        fb.render_a_frame()
-        fb.display_a_frame()
-        print(len(fb.buffer), fb.ms_per_frame, fb.buffer[0].target_time - time.ticks_ms())
-    
+        if a.display():
+            counter += 1
+        if counter >= 100:
+            this_time = time.ticks_ms()
+            print('fps:', 100*1000/(this_time - last_time))
+            last_time = this_time
+            counter = 0

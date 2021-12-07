@@ -22,8 +22,7 @@ class frame():
         self.is_rendered = False # we need to do this since it could be None
         
         # run asynchronously
-        for i, vector in enumerate(self.led_vectors):
-            self.np[i] = self.render_function(vector, self.target_time) 
+        self.render_function(self.np, self.led_vectors, self.target_time) 
         self.is_rendered = True
 
     def display(self):
