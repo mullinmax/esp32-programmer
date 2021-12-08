@@ -9,7 +9,7 @@ wifi = {
     'password':'allhailhypnotoad'
 }
 
-fps = 60
+fps = 30
 frame_buffer_size = 10
 led_scale = 255
 num_leds = 300

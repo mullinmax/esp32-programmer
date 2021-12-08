@@ -22,7 +22,6 @@ class animation():
             for i, v in enumerate(self.led_vectors):
                 frame[i] = func(vector=v, timer_ms = target_time, frame_num=frame_num)
 
-    @micropython.native
     def display(self):
         target_frame = int(time.ticks_ms()/self.ms_per_frame) % self.num_frames
         if self.last_frame != target_frame:   
