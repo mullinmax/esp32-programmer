@@ -15,9 +15,7 @@ class animation():
         try:
             self.frames = [neopixel.NeoPixel(pin, len(led_vectors)) for f in range(num_frames)]
         except:
-            self.frames = [0,0,0]
-            self.frames = [self.frames] * len(led_vectors)
-            self.frames = [self.frames] * num_frames
+            self.frames = [[[0,0,0] for i in range(len(led_vectors))] for f in range(num_frames)]
 
         self.ms_per_frame = int(1000/fps)
         self.last_frame = -1
