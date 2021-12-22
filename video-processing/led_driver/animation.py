@@ -24,11 +24,16 @@ class animation():
         self.render()
 
     def render(self):
-        func = self.render_function
-        for frame_num, frame in enumerate(self.frames):
-            target_time = frame_num * self.ms_per_frame
-            for i, v in enumerate(self.led_vectors):
-                frame[i] = func(vector=v, timer_ms = target_time, frame_num=frame_num)
+        # func = self.render_function
+        frame_times = [i*self.ms_per_frame for i in range(self.num_frames)]
+        print('calling render function')
+        self.render_function(vectors=self.led_vectors, times=frame_times, frames=self.frames)
+        # print('patterns to frames')
+        # for i, f in enumerate(self.frames):
+        #     for led in range(len(self.led_vectors)):
+        #         self.frames[i][led] = f[led]
+        print('done rendering')
+            
 
     def display(self):
         target_frame = int(time.ticks_ms()/self.ms_per_frame) % self.num_frames

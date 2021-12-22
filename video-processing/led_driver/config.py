@@ -3,7 +3,7 @@ try:
 except:
     print('neopixel not available, must not be micropython')
 
-from .vector import vector
+import vector
 
 try: # handle the non-micropython case
     led_pin = machine.Pin(2)
@@ -17,7 +17,10 @@ wifi = {
 }
 
 fps = 30
-frame_buffer_size = 10
 led_scale = 255
-num_leds = 300
-led_vectors = [vector(i,i,i) for i in range(num_leds)]
+num_leds = 50
+led_vectors = [vector.vector(i,i,i) for i in range(num_leds)]
+
+num_frames = 600
+
+twinkle_smooth_ratio = 30
